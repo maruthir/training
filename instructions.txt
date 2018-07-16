@@ -1,0 +1,24 @@
+To start derby database:
+------------------------
+Download the  db-derby-10.11.1.1-bin.zip and mydb.zip
+unzip both the zips:
+
+Open command prompt
+
+cd c:\whereever\db-derby-10.11.1.1-bin\bin
+
+set DERBY_HOME=..\
+
+setNetworkServerCp
+
+startNetworkServer
+-------------------------
+JDBC Url for use in app(Change folder name accordingly): jdbc:derby://localhost:1527//Users/maruthir/Documents/Training/derby/mydb
+-------------------------
+If you want to view the db: 
+
+Install Squirrel SQL client
+Add JDBC driver for derby
+Add DB alias with the above URL
+Use user name and password as "app"
+
