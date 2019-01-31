@@ -1,0 +1,10 @@
+public Weather getWeather(String city) throws Exception {
+        HttpLib lib = new HttpLib();
+        String wjson = lib.get(WEATHER_URL.replaceAll("CITY", city));
+        Gson gson = new Gson();
+        HashMap<String, Object> dataMap = gson.fromJson(wjson, HashMap.class);
+        Weather retVal = new Weather();
+        retVal.lowTemp = ((Double) ((Map) dataMap.get("main")).get("temp_min")).floatValue() - ZERO_KELVIN;
+        retVal.highTemp = ((Double) ((Map) dataMap.get("main")).get("temp_max")).floatValue() - ZERO_KELVIN;
+        return retVal;
+    }
