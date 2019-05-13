@@ -1,0 +1,50 @@
+Ex 1a:
+Http lib method:
+-----------------
+public String get(String url) throws Exception {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestProperty("User-Agent", "APIClient");
+
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        return response.toString();
+    }
+    
+----------------
+Ex 1b:
+public class WeatherService {
+
+    private final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q=CITY&APPID=cc3d457fb9707805588d131ce51804be";
+    private final float ZERO_KELVIN = 273.15F;
+
+    public Weather getWeather(String city) throws Exception {
+        HttpLib lib = new HttpLib();
+        String wjson = lib.get(WEATHER_URL.replaceAll("CITY", city));
+        Gson gson = new Gson();
+        HashMap<String, Object> dataMap = gson.fromJson(wjson, HashMap.class);
+        Weather retVal = new Weather();
+        retVal.lowTemp = ((Double) ((Map) dataMap.get("main")).get("temp_min")).floatValue() - ZERO_KELVIN;
+        retVal.highTemp = ((Double) ((Map) dataMap.get("main")).get("temp_max")).floatValue() - ZERO_KELVIN;
+        return retVal;
+    }
+
+    public static void main(String[] args) throws Exception {
+        WeatherService ws = new WeatherService();
+        Weather w = ws.getWeather("Bengaluru");
+        System.out.println("Max temperature = " + w.highTemp);
+    }
+}
+----------------
