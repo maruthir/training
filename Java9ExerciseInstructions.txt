@@ -1,3 +1,4 @@
+https://github.com/maruthir/training
 Ex 1a:
 Http lib method:
 -----------------
@@ -48,3 +49,18 @@ public class WeatherService {
     }
 }
 ----------------
+$ pwd
+$ /Users/maruthir/Documents/Training/Java9/Java9Plus/out/production
+
+$ cd Ex2a-WeatherService/
+$ jar -cvf weatherservice.jar *
+$ cd ../Ex2b-WeatherPlus/
+$ jar -cvf weatherplus.jar *
+$ cd ../Ex1a-httplib/
+$ jar -cvf httplib.jar *
+$ cd ..
+
+$ /Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/bin/jlink --module-path Ex1a-httplib/httplib.jar:Ex2a-WeatherService/weatherservice.jar:Ex2b-WeatherPlus/weatherplus.jar:../../lib/gson-2.8.5.jar --add-modules weatherpluslib --output linkedfiles
+
+$ cd linkedfiles
+$ bin/java -m weatherpluslib/com.mydomain.weatherplus.WeatherServicePlus
